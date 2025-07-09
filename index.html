@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniversityPathways.AI - Find Your Path to University</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    UniversityPathways.AI
+                </h1>
+                <p class="tagline">Your AI-powered guide to Singapore university admissions</p>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Find Your Perfect University Match</h2>
+                <p>Discover GPA requirements for local university courses in seconds, not hours.</p>
+                
+                <!-- Search Form -->
+                <div class="search-container">
+                    <form id="searchForm" class="search-form">
+                        <div class="form-group">
+                            <label for="university">University</label>
+                            <select id="university" name="university" required>
+                                <option value="">Select University</option>
+                                <option value="nus">National University of Singapore (NUS)</option>
+                                <option value="ntu">Nanyang Technological University (NTU)</option>
+                                <option value="smu">Singapore Management University (SMU)</option>
+                                <option value="sutd">Singapore University of Technology and Design (SUTD)</option>
+                                <option value="sit">Singapore Institute of Technology (SIT)</option>
+                                <option value="suss">Singapore University of Social Sciences (SUSS)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="course">Course Name</label>
+                            <input type="text" id="course" name="course" placeholder="e.g. Computer Science, Business" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gpa">Your GPA (Optional)</label>
+                            <input type="number" id="gpa" name="gpa" placeholder="3.5" min="0" max="4" step="0.1">
+                        </div>
+                        
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i>
+                            Find Requirements
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading State -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Searching for requirements...</p>
+        </div>
+
+        <!-- Results Section -->
+        <section id="results" class="results hidden">
+            <div class="results-header">
+                <h3>Search Results</h3>
+                <button id="newSearch" class="btn-secondary">New Search</button>
+            </div>
+            <div id="resultsContent" class="results-content">
+                <!-- Results will be populated here -->
+            </div>
+        </section>
+
+        <!-- Error State -->
+        <div id="error" class="error hidden">
+            <div class="error-content">
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>Oops! Something went wrong</h3>
+                <p id="errorMessage">Please try again or contact support if the issue persists.</p>
+                <button id="retrySearch" class="btn-primary">Try Again</button>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section class="features">
+            <h3>Why Choose UniversityPathways.AI?</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-rocket"></i>
+                    <h4>Lightning Fast</h4>
+                    <p>Get GPA requirements in seconds, not hours of manual searching</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-brain"></i>
+                    <h4>AI-Powered</h4>
+                    <p>Smart recommendations based on your GPA and preferences</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-sync-alt"></i>
+                    <h4>Always Updated</h4>
+                    <p>Real-time data from university websites and official sources</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h4>Student-Focused</h4>
+                    <p>Built specifically for Singapore polytechnic students</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 UniversityPathways.AI - Empowering student decisions</p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
