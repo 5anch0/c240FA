@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # UniversityPathways.AI 🎓
 
 A centralized AI-powered platform that helps polytechnic students in Singapore quickly find GPA requirements for local university courses.
