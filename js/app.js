@@ -9,6 +9,7 @@ class UniversityPathways {
     init() {
         this.bindEvents();
         this.hideAllSections();
+        this.initTelegramButton();
     }
 
     bindEvents() {
@@ -222,6 +223,16 @@ class UniversityPathways {
 
     delay(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    initTelegramButton() {
+        const telegramButton = document.getElementById('telegram-float');
+        if (telegramButton) {
+            telegramButton.addEventListener('click', () => {
+                // Open Telegram bot in a new tab
+                window.open('https://t.me/UniPathway_bot', '_blank');
+            });
+        }
     }
 
     generateMockData() {

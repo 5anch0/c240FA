@@ -369,3 +369,76 @@ body {
 .hidden {
     display: none;
 }
+
+/* Telegram Floating Button */
+.telegram-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #229ED9 0%, #0088cc 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(34, 158, 217, 0.4);
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 24px;
+    z-index: 1000;
+    text-decoration: none;
+}
+
+.telegram-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(34, 158, 217, 0.6);
+}
+
+.telegram-float .telegram-tooltip {
+    position: absolute;
+    right: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.telegram-float .telegram-tooltip::after {
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-left-color: rgba(0, 0, 0, 0.8);
+}
+
+.telegram-float:hover .telegram-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .telegram-float {
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        font-size: 22px;
+    }
+    
+    .telegram-float .telegram-tooltip {
+        display: none; /* Hide tooltip on mobile to avoid clutter */
+    }
+}
