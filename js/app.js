@@ -409,6 +409,7 @@ class ChatBot {
         this.apiUrl = 'https://your-n8n-instance.com/webhook/chat'; // Replace with your actual n8n webhook URL
         this.isOpen = false;
         this.isTyping = false;
+        this.isFullscreen = false;
         this.messageHistory = [];
         this.init();
     }
@@ -421,12 +422,14 @@ class ChatBot {
     bindEvents() {
         const toggle = document.getElementById('chatbot-toggle');
         const widget = document.getElementById('chatbot-widget');
+        const expandBtn = document.getElementById('chatbot-expand');
         const minimizeBtn = document.getElementById('chatbot-minimize');
         const closeBtn = document.getElementById('chatbot-close');
         const form = document.getElementById('chatbot-form');
         const input = document.getElementById('chatbot-input');
 
         toggle.addEventListener('click', () => this.toggleChat());
+        expandBtn.addEventListener('click', () => this.toggleFullscreen());
         minimizeBtn.addEventListener('click', () => this.minimizeChat());
         closeBtn.addEventListener('click', () => this.closeChat());
         form.addEventListener('submit', (e) => this.handleSubmit(e));
@@ -436,6 +439,18 @@ class ChatBot {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 this.handleSubmit(e);
+            }
+            
+            // Escape key to exit fullscreen
+            if (e.key === 'Escape' && this.isFullscreen) {
+                this.exitFullscreen();
+            }
+        });
+
+        // Handle escape key globally when in fullscreen
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isFullscreen) {
+                this.exitFullscreen();
             }
         });
 
@@ -472,13 +487,25 @@ class ChatBot {
     }
 
     minimizeChat() {
+        if (this.isFullscreen) {
+            this.exitFullscreen();
+        }
+        
         const widget = document.getElementById('chatbot-widget');
         widget.classList.add('hidden');
         this.isOpen = false;
     }
 
     closeChat() {
-        this.minimizeChat();
+        if (this.isFullscreen) {
+            this.exitFullscreen();
+            // Small delay to allow fullscreen exit animation
+            setTimeout(() => {
+                this.minimizeChat();
+            }, 200);
+        } else {
+            this.minimizeChat();
+        }
     }
 
     showNotification() {
@@ -621,8 +648,8 @@ class ChatBot {
         
         messagesContainer.appendChild(messageDiv);
         
-        // Scroll to bottom
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        // Scroll to bottom with smooth animation
+        this.scrollToBottom();
         
         // Store in history
         this.messageHistory.push({ role: sender === 'user' ? 'user' : 'assistant', content: content });
@@ -639,7 +666,7 @@ class ChatBot {
         document.getElementById('chatbot-send').disabled = true;
         
         // Scroll to bottom
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        this.scrollToBottom();
     }
 
     hideTyping() {
@@ -650,6 +677,71 @@ class ChatBot {
         
         // Enable send button
         document.getElementById('chatbot-send').disabled = false;
+    }
+
+    toggleFullscreen() {
+        if (this.isFullscreen) {
+            this.exitFullscreen();
+        } else {
+            this.enterFullscreen();
+        }
+    }
+
+    enterFullscreen() {
+        const widget = document.getElementById('chatbot-widget');
+        const expandBtn = document.getElementById('chatbot-expand');
+        const expandIcon = expandBtn.querySelector('i');
+        
+        // Add fullscreen class with animation
+        widget.classList.add('expanding');
+        
+        setTimeout(() => {
+            widget.classList.remove('expanding');
+            widget.classList.add('fullscreen');
+            this.isFullscreen = true;
+            
+            // Change expand button to compress icon
+            expandIcon.className = 'fas fa-compress';
+            expandBtn.title = 'Exit fullscreen';
+            
+            // Scroll to bottom after transition
+            this.scrollToBottom();
+        }, 400);
+        
+        // Hide body scroll when fullscreen
+        document.body.style.overflow = 'hidden';
+    }
+
+    exitFullscreen() {
+        const widget = document.getElementById('chatbot-widget');
+        const expandBtn = document.getElementById('chatbot-expand');
+        const expandIcon = expandBtn.querySelector('i');
+        
+        // Add contracting animation
+        widget.classList.add('contracting');
+        widget.classList.remove('fullscreen');
+        
+        setTimeout(() => {
+            widget.classList.remove('contracting');
+            this.isFullscreen = false;
+            
+            // Change compress button back to expand icon
+            expandIcon.className = 'fas fa-expand';
+            expandBtn.title = 'Expand to fullscreen';
+            
+            // Scroll to bottom after transition
+            this.scrollToBottom();
+        }, 400);
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+    }
+
+    scrollToBottom() {
+        const messagesContainer = document.getElementById('chatbot-messages');
+        if (messagesContainer) {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
     }
 }
 
